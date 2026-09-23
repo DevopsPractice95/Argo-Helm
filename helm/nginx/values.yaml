@@ -1,0 +1,22 @@
+# Shared defaults. Environment files override these values.
+replicaCount: 1
+nameOverride: helm-guestbook
+fullnameOverride: helm-demo-helm-guestbook
+image:
+  repository: nginx
+  tag: 1.28-alpine
+  pullPolicy: IfNotPresent
+containerPort: 80
+service:
+  type: ClusterIP
+  port: 80
+resources:
+  requests:
+    cpu: 50m
+    memory: 32Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+nodeSelector: {}
+tolerations: []
+affinity: {}

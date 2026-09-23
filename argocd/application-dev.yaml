@@ -1,0 +1,23 @@
+# Development tracks the main branch of this repository.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: helm-demo
+  namespace: argocd
+spec:
+  project: web-apps
+  source:
+    repoURL: https://github.com/DevopsPractice95/Argo-Helm.git
+    targetRevision: main
+    path: helm/nginx
+    helm:
+      releaseName: helm-demo
+      valueFiles:
+        - ../../environments/dev/values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

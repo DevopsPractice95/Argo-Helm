@@ -1,0 +1,39 @@
+# Bootstrap application currently running from the public example repository.
+# For this local chart, configure argocd/application-dev.yaml instead.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: helm-demo
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/argoproj/argocd-example-apps.git
+    targetRevision: 8088f4c0d970abb09e250248cc97e35623447cb5
+    path: helm-guestbook
+    helm:
+      releaseName: helm-demo
+      values: |
+        replicaCount: 1
+        image:
+          repository: nginx
+          tag: 1.28-alpine
+        service:
+          type: ClusterIP
+          port: 80
+        resources:
+          requests:
+            cpu: 50m
+            memory: 32Mi
+          limits:
+            cpu: 200m
+            memory: 128Mi
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

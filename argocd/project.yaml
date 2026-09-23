@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: web-apps
+  namespace: argocd
+spec:
+  description: NGINX demo workloads in the demo namespace
+  sourceRepos:
+    - https://github.com/DevopsPractice95/Argo-Helm.git
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: demo
+  namespaceResourceWhitelist:
+    - group: apps
+      kind: Deployment
+    - group: ""
+      kind: Service

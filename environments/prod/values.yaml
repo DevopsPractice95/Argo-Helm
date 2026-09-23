@@ -1,0 +1,10 @@
+# Example sizing only: configure ingress, TLS and operational requirements
+# for your real production environment before deploying.
+replicaCount: 2
+resources:
+  requests:
+    cpu: 100m
+    memory: 64Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
