@@ -119,3 +119,15 @@ pointing to a directory containing `config.json` with `{"auths":{}}`, and
 `DOCKER_HOST=unix://$HOME/.colima/argocd-demo/docker.sock`.
 
 Reference: https://argo-cd.readthedocs.io/en/stable/getting_started/
+
+## Local DNS workaround
+
+The repo-server pod uses `ndots: 1` and `single-request-reopen` to avoid
+intermittent external lookups through the Colima DNS forwarder. Reapply after
+reinstalling or upgrading the upstream Argo CD Deployment:
+
+```bash
+kubectl --context kind-argocd-demo -n argocd patch deployment argocd-repo-server --patch-file manifests/argocd-repo-server-dns-patch.yaml
+```
+
+Development runs three replicas, configured in `environments/dev/values.yaml`.

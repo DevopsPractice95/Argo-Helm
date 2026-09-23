@@ -1,0 +1,10 @@
+# Local Colima workaround: resolve external names directly and reopen the
+# socket between A/AAAA queries through the VM's DNS forwarder.
+spec:
+  template:
+    spec:
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+          - name: single-request-reopen
